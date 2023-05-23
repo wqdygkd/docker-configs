@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  mysql-init:
+    image: mysql:8
+    container_name: mysql-init
+    command: /init-db.sh
+    volumes:
+      - ./db:/sql
+      - ./init-db.sh:/init-db.sh
+    environment:
+    - MYSQL_ROOT_PASSWORD=123456
+    depends_on:
+      - mysql

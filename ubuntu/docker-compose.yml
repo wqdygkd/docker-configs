@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  ubuntu:
+    image: ubuntu:22.04
+    container_name: ubuntu
+    restart: always
+    # ports:
+    #   - "8080:80"
+    network_mode: host
+    tty: true
+    command:
+      - bt start # 启动宝塔
+      - service aria2 start # 启动 aria2
+      - service nginx start # 启动 nginx
