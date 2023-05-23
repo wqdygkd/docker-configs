@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 services:
   mysql-init:
     image: mysql:8
@@ -8,6 +8,6 @@ services:
       - ./db:/sql
       - ./init-db.sh:/init-db.sh
     environment:
-    - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     depends_on:
       - mysql
