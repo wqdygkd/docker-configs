@@ -1,16 +1,25 @@
 version: '3.9'
 services:
   mysql:
-    image: mysql:5.7.39
+    # build 和 image 二选一
+    # build: 自己构建镜像
+    # image: 使用已经构建好的镜像
+    build:
+      context: ./dir # context 选项可以是 Dockerfile 的文件路径，也可以是到链接到 git 仓库的 url
+      dockerfile: path/of/Dockerfile # 使用此 dockerfile 文件来构建，必须指定构建路径
+    image: mysql:5.7.39 # 镜像名称
     restart: always
     hostname: mysql
-    container_name: mysql-main
+    container_name: mysql-main # 容器名称
+    command: --default-authentication-plugin=mysql_native_password --lower-case-table-names=1  # 覆盖容器启动后默认执行的命令
     privileged: true
     env_file: .env
     working_dir: /usr/src/mymaven # gongzuomulu
     tty: true
     ports:
-      - 3306:3306
+      #  HOST:CONTAINER
+      - 3306:3306 # 端口
+      #- 127.0.0.1:8889:8889
     environment:
       - MYSQL_ROOT_PASSWORD=123456 # root 密码
       - MYSQL_DATABASE=main # 数据库
@@ -20,7 +29,6 @@ services:
     volumes:
       - ./data/:/var/lib/mysql/
       - ./log/:/logs
-    command: --default-authentication-plugin=mysql_native_password --lower-case-table-names=1
     networks:
       default:
         ipv4_address: 192.168.1.2 # 同网段IP
