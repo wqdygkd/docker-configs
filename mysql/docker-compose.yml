@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   mysql:
-    image: mysql:5.7.39
+    image: mysql:8.4.0
     restart: always
     hostname: mysql
     container_name: mysql-main
@@ -17,4 +17,4 @@ services:
     volumes:
       - ./data/:/var/lib/mysql/
       - ./log/:/logs
-    command: --default-authentication-plugin=mysql_native_password --lower-case-table-names=1
+    command: --default-authentication-plugin=mysql_native_password
