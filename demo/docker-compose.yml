@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   mysql:
     # build 和 image 二选一
@@ -13,9 +12,15 @@ services:
     container_name: mysql-main # 容器名称
     command: --default-authentication-plugin=mysql_native_password --lower-case-table-names=1  # 覆盖容器启动后默认执行的命令
     privileged: true
+
     env_file: .env
+    # env_file:
+    #   - .env
+
     working_dir: /usr/src/mymaven # gongzuomulu
     tty: true
+
+    network_mode: 'host'
     ports:
       #  HOST:CONTAINER
       - 3306:3306 # 端口
@@ -29,6 +34,14 @@ services:
     volumes:
       - ./data/:/var/lib/mysql/
       - ./log/:/logs
+
+      # --mount type=bind,source=/path/to/media,target=/media,readonly
+      - type: bind
+        source: /path/to/media2
+        target: /media2
+        read_only: true
+    devices:
+      - /dev/dri/:/dev/dri/ # --device /dev/dri/:/dev/dri/
     networks:
       default:
         ipv4_address: 192.168.1.2 # 同网段IP
